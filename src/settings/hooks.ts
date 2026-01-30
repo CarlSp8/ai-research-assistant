@@ -19,13 +19,6 @@ async function onStartup() {
     `chrome://${config.addonRef}/content/icons/favicon.png`,
   )
 
-  // TODO: Remove this after zotero#3387 is merged
-  if (__env__ === "development") {
-    // Keep in sync with the scripts/startup.mjs
-    const loadDevToolWhen = `Plugin ${config.addonID} startup`
-    ztoolkit.log(loadDevToolWhen)
-  }
-
   await onMainWindowLoad(Zotero.getMainWindow())
 }
 
