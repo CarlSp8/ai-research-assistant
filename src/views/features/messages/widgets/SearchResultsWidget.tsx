@@ -84,6 +84,18 @@ export function SearchResultsWidget({
   const output = searchResultsBotStep.params.action.output
   log({ output })
 
+  if (!output) {
+    return (
+      <div className="text-base">
+        <div className="mb-2">
+          <h4 className="p-0 m-0 mb-1 text-tomato text-lg">Search Strategy</h4>
+          {query ? <SearchStrategy query={query} /> : null}
+        </div>
+        <div>Loading results...</div>
+      </div>
+    )
+  }
+
   return (
     <div className="text-base">
       <div className="mb-2">
@@ -173,7 +185,7 @@ async function createNote({
   results,
 }: any) {
   const resultIds: string[] = results.map(({ item }: any) => item.id)
-  const csl = Zotero.Styles.get(DEFAULT_BIB_STYLE).getCiteProc()
+  const csl = (Zotero as any).Styles.get(DEFAULT_BIB_STYLE).getCiteProc()
   csl.updateItems(resultIds)
   const bibs = csl.makeBibliography()[1]
   const resultItems = await Zotero.Items.getAsync(resultIds)

@@ -6,9 +6,9 @@ import {
   MessageDelta,
   MessageContent,
 } from "openai/resources/beta/threads/messages"
-import { MessageStep, MessageStepContent } from "../steps/MessageStep"
-import { ToolStep, ToolStepContent } from "../steps/ToolStep"
-import { ErrorStep, ErrorStepContent } from "../steps/ErrorStep"
+import { MessageStep } from "../steps/MessageStep"
+import { ToolStep } from "../steps/ToolStep"
+import { ErrorStep } from "../steps/ErrorStep"
 import { createCitations } from "../../../../apis/zotero/citation"
 import { ItemButton } from "../../../components/buttons/ItemButton"
 import { createCollection } from "../../../../apis/zotero/collection"
@@ -38,7 +38,7 @@ import { FileUploadIcon, FileIndexIcon } from "../../../icons/file"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid"
 import { FileStatus } from "../../../components/files/FileStatus"
 import { FilePreparation } from "../../../components/files/FirePreparation"
-import { QAActionStepContent } from "../../../../typings/steps"
+import { QAActionStepContent, MessageStepContent, ToolStepContent, ErrorStepContent } from "../../../../typings/steps"
 
 export interface QAActionProps {
   content: QAActionStepContent
@@ -85,7 +85,7 @@ export const QAAction = memo(function QAActionComponent({
             output: snapshot.content,
           },
         },
-      })
+      } as any)
       snapshot.content
         .filter((x) => x.type === "text")
         .map((x) => {

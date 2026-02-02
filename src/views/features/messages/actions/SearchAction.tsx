@@ -99,14 +99,14 @@ export function SearchAction({
             ...params,
             action: { ...params.action, output },
           },
-        })
+        } as any)
         updateBotStep(messageId, params.workflow.stepId, {
           type: "WORKFLOW_STEP",
           params: {
             searchResultsStepId: id,
             searchResultsCount: output.count,
           },
-        })
+        } as any)
       }
     }
     if (output === undefined) {

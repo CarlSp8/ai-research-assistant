@@ -23,6 +23,7 @@ export function QAWorkflow({
       if (!content.params.searchResultsStepId) {
         addBotStep(content.messageId, {
           type: "ACTION_STEP",
+          status: "IN_PROGRESS",
           params: {
             action: {
               type: "search",
@@ -33,12 +34,14 @@ export function QAWorkflow({
               messageId: content.messageId,
               stepId: content.id,
             },
+            context: content.params.context,
           },
         })
       } else if (content.params.workflow.input.fulltext) {
         if (content.params.searchResultsCount === 0) {
           addBotStep(content.messageId, {
             type: "ACTION_STEP",
+              status: "IN_PROGRESS",
             params: {
               action: {
                 type: "retry",
@@ -47,8 +50,8 @@ export function QAWorkflow({
                   prompt:
                     "The search query didn't return any results. Please revise and try again.",
                 },
-              },
-              // context: content.params.context,
+              } as any,
+                context: content.params.context,
               workflow: {
                 type: "qa",
                 messageId: content.messageId,
@@ -60,6 +63,7 @@ export function QAWorkflow({
           if (!content.params.indexed) {
             addBotStep(content.messageId, {
               type: "ACTION_STEP",
+                status: "IN_PROGRESS",
               params: {
                 action: {
                   type: "file",
@@ -67,7 +71,8 @@ export function QAWorkflow({
                     // files: searchResults.results,
                     searchResultsStepId: content.params.searchResultsStepId,
                   },
-                },
+              } as any,
+                  context: content.params.context,
                 workflow: {
                   type: "qa",
                   messageId: content.messageId,
@@ -78,6 +83,7 @@ export function QAWorkflow({
           } else {
             addBotStep(content.messageId, {
               type: "ACTION_STEP",
+                status: "IN_PROGRESS",
               params: {
                 action: {
                   type: "qa",
@@ -85,7 +91,8 @@ export function QAWorkflow({
                     question: content.params.workflow.input.question,
                     fulltext: content.params.workflow.input.fulltext,
                   },
-                },
+              } as any,
+                  context: content.params.context,
                 workflow: {
                   type: "qa",
                   messageId: content.messageId,

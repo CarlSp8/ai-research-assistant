@@ -6,9 +6,9 @@ import {
   MessageDelta,
   MessageContent,
 } from "openai/resources/beta/threads/messages"
-import { MessageStep, MessageStepContent } from "../steps/MessageStep"
-import { ToolStep, ToolStepContent } from "../steps/ToolStep"
-import { ErrorStep, ErrorStepContent } from "../steps/ErrorStep"
+import { MessageStep } from "../steps/MessageStep"
+import { ToolStep } from "../steps/ToolStep"
+import { ErrorStep } from "../steps/ErrorStep"
 import { createCitations } from "../../../../apis/zotero/citation"
 import { ItemButton } from "../../../components/buttons/ItemButton"
 import { createCollection } from "../../../../apis/zotero/collection"
@@ -39,7 +39,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid"
 import { FileStatus } from "../../../components/files/FileStatus"
 import { FilePreparation } from "../../../components/files/FirePreparation"
 import { MentionValue } from "../../../../typings/input"
-import { RetryActionStepContent } from "../../../../typings/steps"
+import { RetryActionStepContent, MessageStepContent, ToolStepContent, ErrorStepContent } from "../../../../typings/steps"
 
 type StepContent = MessageStepContent | ToolStepContent | ErrorStepContent
 
