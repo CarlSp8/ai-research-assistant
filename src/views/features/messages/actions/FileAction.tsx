@@ -61,7 +61,11 @@ export const FileAction = memo(function FileActionComponent({
         messageId,
         searchResultsStepId,
       ) as SearchActionStepContent
-      const itemIds = searchResultsBotStep.params.action.output.results
+      const output = searchResultsBotStep.params.action.output
+      if (!output) {
+        return
+      }
+      const itemIds = output.results
       log("Search result item IDs", { itemIds })
       const files = await getItemsAndIndexAttachments(
         itemIds,
@@ -88,7 +92,7 @@ export const FileAction = memo(function FileActionComponent({
         params: {
           indexed: true,
         },
-      })
+      } as any)
     }
   }, [uploadComplete, indexComplete])
 

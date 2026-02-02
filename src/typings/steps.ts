@@ -71,10 +71,11 @@ export interface SearchWorkflowStepContent extends BaseStepContent {
 export interface QAWorkflowStepContent extends BaseStepContent {
   type: "WORKFLOW_STEP"
   params: {
-
     workflow: QAWorkflowType
     context: RoutingOutput["context"],
     searchResultsStepId?: string
+    searchResultsCount?: number
+    indexed?: boolean
   }
 }
 
@@ -153,6 +154,9 @@ export interface ActionStepControl extends BaseStepControl {
   addBotMessage: ReturnType<typeof useMessages>["addBotMessage"]
   addBotStep: ReturnType<typeof useMessages>["addBotStep"]
   updateBotAction: ReturnType<typeof useMessages>["updateBotAction"]
+  getBotStep: ReturnType<typeof useMessages>["getBotStep"]
+  updateBotStep: ReturnType<typeof useMessages>["updateBotStep"]
+  completeBotMessageStep: ReturnType<typeof useMessages>["completeBotMessageStep"]
 }
 
 export interface WorkflowStepControl extends BaseStepControl {

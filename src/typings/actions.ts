@@ -7,12 +7,12 @@ export type ActionStatus = "IN_PROGRESS" | "COMPLETED"
 
 export type SearchActionType = z.infer<typeof SearchWorkflowSchema> & {
   mode: "search" | "qa" | "fulltext"
-  output: Awaited<ReturnType<typeof recursiveSearchAndCompileResults>>
+  output?: Awaited<ReturnType<typeof recursiveSearchAndCompileResults>>
 }
 
 export type QAActionType = z.infer<typeof QAWorkflowSchema> & {
   input: any
-  output: any
+  output?: any
 }
 
 export type RetryActionType = {
@@ -21,7 +21,7 @@ export type RetryActionType = {
     message: string
     prompt: string
   }
-  output: any
+  output?: any
 }
 
 export type FileActionType = {
@@ -29,7 +29,7 @@ export type FileActionType = {
   input: {
     searchResultsStepId: string
   }
-  output: any
+  output?: any
 }
 
 export type ActionType = SearchActionType | QAActionType | RetryActionType
