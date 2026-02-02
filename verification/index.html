@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // Mocks
+    const SearchStrategy = ({ query }) => <div className="text-sm border p-2">Search Strategy: {JSON.stringify(query)}</div>;
+    const SearchResultTable = () => <div>Results Table</div>;
+    const log = console.log;
+
+    // Component under test (pasted and slightly adapted to run without imports)
+    function SearchResultsWidget({
+      content: {
+        messageId,
+        id,
+        params: {
+          message: { query, searchResultsStepId },
+        },
+        status,
+      },
+      control: { getBotStep },
+    }) {
+      const searchResultsBotStep = getBotStep(
+        messageId,
+        searchResultsStepId,
+      );
+      const output = searchResultsBotStep.params.action.output
+      log({ output })
+
+      if (!output) {
+        return (
+          <div className="text-base p-4 border rounded shadow-sm bg-white font-sans">
+            <div className="mb-2">
+              <h4 className="p-0 m-0 mb-1 text-tomato text-lg font-bold text-red-500">Search Strategy</h4>
+              {query ? <SearchStrategy query={query} /> : null}
+            </div>
+            <div>Loading results...</div>
+          </div>
+        )
+      }
+
+      return (
+        <div className="text-base">
+          Loaded!
+        </div>
+      )
+    }
+
+    // App
+    const App = () => {
+      const mockControl = {
+        getBotStep: () => ({
+          params: {
+            action: {
+              output: undefined // SIMULATE MISSING OUTPUT
+            }
+          }
+        })
+      };
+
+      const mockContent = {
+        messageId: "msg1",
+        id: "step1",
+        params: {
+          message: {
+            query: { q: "machine learning" },
+            searchResultsStepId: "step0"
+          }
+        },
+        status: "IN_PROGRESS"
+      };
+
+      return (
+        <div className="p-10 bg-gray-100 min-h-screen">
+          <SearchResultsWidget content={mockContent} control={mockControl} />
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
